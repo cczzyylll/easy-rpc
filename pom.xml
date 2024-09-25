@@ -19,6 +19,6 @@
 
     <packaging>pom</packaging>
 
-    <description>一款轻量级的Java RPC框架</description>
+    <description>轻量级的Java RPC框架</description>
 
 </project>
