@@ -9,16 +9,15 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>rpc-core</module>
-        <module>rpc-core</module>
-        <module>rpc-server</module>
-        <module>rpc-starter</module>
-        <module>rpc-client</module>
-        <module>rpc-interface</module>
+        <module>easy-rpc-core</module>
+        <module>easy-rpc-spring-starter</module>
+        <module>rpc-framework-interface</module>
+        <module>rpc-framework-provider</module>
+        <module>rpc-framework-consumer</module>
     </modules>
 
     <packaging>pom</packaging>
 
-    <description>轻量级的Java RPC框架</description>
+    <description>一款轻量级的Java RPC框架</description>
 
 </project>

@@ -1,0 +1,4 @@
+com\shaogezhu\easy\rpc\spring\starter\common\EasyRpcService.class
+com\shaogezhu\easy\rpc\spring\starter\common\EasyRpcReference.class
+com\shaogezhu\easy\rpc\spring\starter\config\RpcServerAutoConfiguration.class
+com\shaogezhu\easy\rpc\spring\starter\config\RpcClientAutoConfiguration.class
