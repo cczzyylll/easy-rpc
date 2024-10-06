@@ -5,8 +5,8 @@ import com.shaogezhu.easy.rpc.core.common.config.ServerConfig;
 import com.shaogezhu.easy.rpc.core.dispatcher.ServerChannelDispatcher;
 import com.shaogezhu.easy.rpc.core.filter.server.ServerAfterFilterChain;
 import com.shaogezhu.easy.rpc.core.filter.server.ServerBeforeFilterChain;
-import com.shaogezhu.easy.rpc.core.registy.RegistryService;
-import com.shaogezhu.easy.rpc.core.registy.URL;
+import com.shaogezhu.easy.rpc.core.register.RegistryService;
+import com.shaogezhu.easy.rpc.core.register.URL;
 import com.shaogezhu.easy.rpc.core.serialize.SerializeFactory;
 import com.shaogezhu.easy.rpc.core.server.ServiceWrapper;
 

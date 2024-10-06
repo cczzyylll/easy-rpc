@@ -1,4 +1,4 @@
-package com.shaogezhu.easy.rpc.core.registy.zookeeper;
+package com.shaogezhu.easy.rpc.core.register.zookeeper;
 
 import org.apache.zookeeper.Watcher;
 

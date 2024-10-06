@@ -1,4 +1,4 @@
-package com.shaogezhu.easy.rpc.core.registy;
+package com.shaogezhu.easy.rpc.core.register;
 
 import com.shaogezhu.easy.rpc.core.common.event.data.ProviderNodeInfo;
 

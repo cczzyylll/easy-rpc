@@ -5,7 +5,7 @@ import com.shaogezhu.easy.rpc.core.common.ChannelFutureWrapper;
 import com.shaogezhu.easy.rpc.core.common.event.RpcUpdateEvent;
 import com.shaogezhu.easy.rpc.core.common.event.data.ProviderNodeInfo;
 import com.shaogezhu.easy.rpc.core.common.event.data.URLChangeWrapper;
-import com.shaogezhu.easy.rpc.core.registy.URL;
+import com.shaogezhu.easy.rpc.core.register.URL;
 import com.shaogezhu.easy.rpc.core.router.Selector;
 import io.netty.channel.ChannelFuture;
 import org.slf4j.Logger;

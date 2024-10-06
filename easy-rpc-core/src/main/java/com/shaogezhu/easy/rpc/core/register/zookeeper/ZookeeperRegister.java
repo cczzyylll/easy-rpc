@@ -1,4 +1,4 @@
-package com.shaogezhu.easy.rpc.core.registy.zookeeper;
+package com.shaogezhu.easy.rpc.core.register.zookeeper;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -9,9 +9,9 @@ import com.shaogezhu.easy.rpc.core.common.event.RpcUpdateEvent;
 import com.shaogezhu.easy.rpc.core.common.event.data.ProviderNodeInfo;
 import com.shaogezhu.easy.rpc.core.common.event.data.URLChangeWrapper;
 import com.shaogezhu.easy.rpc.core.common.utils.CommonUtil;
-import com.shaogezhu.easy.rpc.core.registy.AbstractRegister;
-import com.shaogezhu.easy.rpc.core.registy.RegistryService;
-import com.shaogezhu.easy.rpc.core.registy.URL;
+import com.shaogezhu.easy.rpc.core.register.AbstractRegister;
+import com.shaogezhu.easy.rpc.core.register.RegistryService;
+import com.shaogezhu.easy.rpc.core.register.URL;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.slf4j.Logger;

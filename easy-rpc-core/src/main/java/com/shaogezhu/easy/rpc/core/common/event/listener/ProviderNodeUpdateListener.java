@@ -2,7 +2,7 @@ package com.shaogezhu.easy.rpc.core.common.event.listener;
 
 import com.shaogezhu.easy.rpc.core.common.ChannelFutureWrapper;
 import com.shaogezhu.easy.rpc.core.common.event.RpcNodeUpdateEvent;
-import com.shaogezhu.easy.rpc.core.registy.URL;
+import com.shaogezhu.easy.rpc.core.register.URL;
 import com.shaogezhu.easy.rpc.core.common.event.data.ProviderNodeInfo;
 
 import java.util.List;

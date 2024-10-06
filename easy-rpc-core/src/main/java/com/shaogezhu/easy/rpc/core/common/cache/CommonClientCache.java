@@ -5,7 +5,8 @@ import com.shaogezhu.easy.rpc.core.common.ChannelFutureWrapper;
 import com.shaogezhu.easy.rpc.core.common.RpcInvocation;
 import com.shaogezhu.easy.rpc.core.common.config.ClientConfig;
 import com.shaogezhu.easy.rpc.core.filter.client.ClientFilterChain;
-import com.shaogezhu.easy.rpc.core.registy.URL;
+import com.shaogezhu.easy.rpc.core.register.RegisterInfo;
+import com.shaogezhu.easy.rpc.core.register.URL;
 import com.shaogezhu.easy.rpc.core.router.Router;
 import com.shaogezhu.easy.rpc.core.serialize.SerializeFactory;
 import com.shaogezhu.easy.rpc.core.spi.ExtensionLoader;
@@ -21,6 +22,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @description: 公用缓存 存储请求队列等公共信息
  */
 public class CommonClientCache {
+
+    public static List<RegisterInfo> PROVIDER_INFO_LIST = new ArrayList<>();
     /**
      * 发送队列
      */

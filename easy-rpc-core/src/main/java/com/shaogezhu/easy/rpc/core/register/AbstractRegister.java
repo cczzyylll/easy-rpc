@@ -1,4 +1,4 @@
-package com.shaogezhu.easy.rpc.core.registy;
+package com.shaogezhu.easy.rpc.core.register;
 
 import java.util.List;
 import java.util.Map;

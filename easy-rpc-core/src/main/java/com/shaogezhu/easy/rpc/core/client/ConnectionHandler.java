@@ -4,7 +4,7 @@ import com.shaogezhu.easy.rpc.core.common.ChannelFutureWrapper;
 import com.shaogezhu.easy.rpc.core.common.RpcInvocation;
 import com.shaogezhu.easy.rpc.core.common.event.data.ProviderNodeInfo;
 import com.shaogezhu.easy.rpc.core.common.utils.CommonUtil;
-import com.shaogezhu.easy.rpc.core.registy.URL;
+import com.shaogezhu.easy.rpc.core.register.URL;
 import com.shaogezhu.easy.rpc.core.router.Selector;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;

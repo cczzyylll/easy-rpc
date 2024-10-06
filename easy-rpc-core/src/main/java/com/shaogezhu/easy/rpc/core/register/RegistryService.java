@@ -1,10 +1,5 @@
-package com.shaogezhu.easy.rpc.core.registy;
+package com.shaogezhu.easy.rpc.core.register;
 
-/**
- * @Author peng
- * @Date 2023/2/27
- * @description: 注册中心抽象层
- */
 public interface RegistryService {
 
     /**

@@ -1,7 +1,7 @@
 package com.shaogezhu.easy.rpc.core.common.event.listener;
 
 import com.shaogezhu.easy.rpc.core.common.event.RpcDestroyEvent;
-import com.shaogezhu.easy.rpc.core.registy.URL;
+import com.shaogezhu.easy.rpc.core.register.URL;
 
 import java.util.Iterator;
 

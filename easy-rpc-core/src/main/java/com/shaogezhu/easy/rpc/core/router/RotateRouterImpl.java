@@ -1,7 +1,7 @@
 package com.shaogezhu.easy.rpc.core.router;
 
 import com.shaogezhu.easy.rpc.core.common.ChannelFutureWrapper;
-import com.shaogezhu.easy.rpc.core.registy.URL;
+import com.shaogezhu.easy.rpc.core.register.URL;
 
 import java.util.List;
 
