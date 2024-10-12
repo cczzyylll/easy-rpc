@@ -11,12 +11,14 @@ import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.data.Stat;
 
+import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 
 import static com.shaogezhu.easy.rpc.core.register.zookeeper.ZookeeperClientConfig.DEFAULT_BASE_SLEEP_TIMES;
 import static com.shaogezhu.easy.rpc.core.register.zookeeper.ZookeeperClientConfig.DEFAULT_MAX_RETRIES;
 
+@Resource
 public class ZookeeperClient {
     private static final Logger logger = LogManager.getLogger(ZookeeperClient.class);
     private CuratorFramework client;
@@ -45,9 +47,9 @@ public class ZookeeperClient {
         }
     }
 
-    public String getNode(String address) {
+    public String getNode(String path) {
         try {
-            byte[] result = client.getData().forPath(address);
+            byte[] result = client.getData().forPath(path);
             if (result != null) {
                 return new String(result);
             }

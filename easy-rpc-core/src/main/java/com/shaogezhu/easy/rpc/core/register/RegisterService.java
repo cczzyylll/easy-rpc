@@ -2,12 +2,14 @@ package com.shaogezhu.easy.rpc.core.register;
 
 import org.apache.zookeeper.Watcher;
 
-public interface RegisterServer {
+public interface RegisterService {
     void register(RegisterInfo registerInfo);
 
     void unRegister(RegisterInfo registerInfo);
 
-    void subScribe(RegisterInfo registerInfo, Watcher watcher);
+    void subScribe(String path, Watcher watcher);
 
-    void unSunScribe(RegisterInfo registerInfo);
+    void unSunScribe(String path);
+
+    String getNode(String path);
 }

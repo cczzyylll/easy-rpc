@@ -22,8 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @description: 公用缓存 存储请求队列等公共信息
  */
 public class CommonClientCache {
-
-    public static List<RegisterInfo> PROVIDER_INFO_LIST = new ArrayList<>();
+    public static Map<String, RegisterInfo> PROVIDER_INFO_MAP = new HashMap<>();
     /**
      * 发送队列
      */

@@ -31,6 +31,41 @@ public class RegisterInfo {
                 "weight" + ":" + parameters.getOrDefault(WEIGHT, null);
     }
 
+    public static RegisterInfo parseRegister(String data) {
+        RegisterInfo registerInfo = new RegisterInfo();
+        String[] parts = data.split("/");
+        for (String part : parts) {
+            String[] keyValue = part.split(":");
+            if (keyValue.length == 2) {
+                String key = keyValue[0];
+                String value = keyValue[1];
+                switch (key) {
+                    case "application":
+                        registerInfo.setApplication(value);
+                        break;
+                    case "serviceName":
+                        registerInfo.setServiceName(value);
+                        break;
+                    case "ip":
+                        registerInfo.getParameters().put(IP, value);
+                        break;
+                    case "port":
+                        registerInfo.getParameters().put(PORT, value);
+                        break;
+                    case "group":
+                        registerInfo.getParameters().put(GROUP, value);
+                        break;
+                    case "weight":
+                        registerInfo.getParameters().put(WEIGHT, value);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        return registerInfo;
+    }
+
     public String buildProviderPath() {
         return buildAbsolutePath(PROVIDER);
     }
@@ -38,6 +73,7 @@ public class RegisterInfo {
     public String buildConsumerPath() {
         return buildAbsolutePath(CONSUMER);
     }
+
 
     private String buildAbsolutePath(String role) {
         return "/" + ROOT + "/" + application + "/" + serviceName + "/" + role + "/" + buildPath();

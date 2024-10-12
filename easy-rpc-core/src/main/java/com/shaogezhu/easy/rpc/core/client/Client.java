@@ -11,9 +11,9 @@ import com.shaogezhu.easy.rpc.core.common.utils.CommonUtil;
 import com.shaogezhu.easy.rpc.core.filter.ClientFilter;
 import com.shaogezhu.easy.rpc.core.filter.client.ClientFilterChain;
 import com.shaogezhu.easy.rpc.core.proxy.ProxyFactory;
-import com.shaogezhu.easy.rpc.core.register.AbstractRegister;
-import com.shaogezhu.easy.rpc.core.register.RegistryService;
-import com.shaogezhu.easy.rpc.core.register.URL;
+import com.shaogezhu.easy.rpc.core.register.*;
+import com.shaogezhu.easy.rpc.core.register.RegisterServer;
+import com.shaogezhu.easy.rpc.core.register.zookeeper.ZRigister;
 import com.shaogezhu.easy.rpc.core.router.Router;
 import com.shaogezhu.easy.rpc.core.serialize.SerializeFactory;
 import io.netty.bootstrap.Bootstrap;
@@ -47,7 +47,7 @@ import static com.shaogezhu.easy.rpc.core.spi.ExtensionLoader.EXTENSION_LOADER_C
  * @Date 2023/2/23 22:48
  */
 public class Client {
-
+    public static RegisterService registerService;
     private AbstractRegister abstractRegister;
 
     private final Bootstrap bootstrap = new Bootstrap();
@@ -209,6 +209,24 @@ public class Client {
                 }
             }
         }
+    }
+
+    private void initRegister() {
+        if (registerService == null) {
+            try {
+                registerService = new ZRigister("localhost:2181");
+            } catch (Exception e) {
+                throw new RuntimeException("registryServiceType unKnow,error is ", e);
+            }
+        }
+    }
+
+    private void subScribe(){
+
+    }
+
+    private List<String> retrievePaths() {
+
     }
 
 }
