@@ -45,7 +45,6 @@ public class RpcServerAutoConfiguration implements InitializingBean, Application
             dataServiceServiceWrapper.setLimit(easyRpcService.limit());
             dataServiceServiceWrapper.setWeight(easyRpcService.weight());
             server.registyService(dataServiceServiceWrapper);
-            LOGGER.info(">>>>>>>>>>>>>>> [easy-rpc] {} export success! >>>>>>>>>>>>>>> ", beanName);
         }
         ServerShutdownHook.registryShutdownHook();
         server.startServerApplication();
