@@ -12,7 +12,7 @@ import com.shaogezhu.easy.rpc.core.filter.ClientFilter;
 import com.shaogezhu.easy.rpc.core.filter.client.ClientFilterChain;
 import com.shaogezhu.easy.rpc.core.proxy.ProxyFactory;
 import com.shaogezhu.easy.rpc.core.register.*;
-import com.shaogezhu.easy.rpc.core.register.RegisterServer;
+import com.shaogezhu.easy.rpc.core.register.zookeeper.LoopWatcher;
 import com.shaogezhu.easy.rpc.core.register.zookeeper.ZRigister;
 import com.shaogezhu.easy.rpc.core.router.Router;
 import com.shaogezhu.easy.rpc.core.serialize.SerializeFactory;
@@ -30,15 +30,9 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonClientCache.CLIENT_CONFIG;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonClientCache.CLIENT_FILTER_CHAIN;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonClientCache.CLIENT_SERIALIZE_FACTORY;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonClientCache.EXTENSION_LOADER;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonClientCache.ROUTER;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonClientCache.SEND_QUEUE;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonClientCache.SUBSCRIBE_SERVICE_LIST;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonClientCache.URL_MAP;
+import static com.shaogezhu.easy.rpc.core.common.cache.CommonClientCache.*;
 import static com.shaogezhu.easy.rpc.core.common.constants.RpcConstants.DEFAULT_DECODE_CHAR;
 import static com.shaogezhu.easy.rpc.core.spi.ExtensionLoader.EXTENSION_LOADER_CLASS_CACHE;
 
@@ -133,25 +127,21 @@ public class Client {
      * 启动服务之前需要预先订阅对应的dubbo服务
      */
     public void doSubscribeService(Class<?> serviceBean) {
-        if (abstractRegister == null) {
-            try {
-                //初始化注册中心
-                String registerType = CLIENT_CONFIG.getRegisterType();
-                EXTENSION_LOADER.loadExtension(RegistryService.class);
-                LinkedHashMap<String, Class<?>> registerMap = EXTENSION_LOADER_CLASS_CACHE.get(RegistryService.class.getName());
-                Class<?> registerClass = registerMap.get(registerType);
-                abstractRegister = (AbstractRegister) registerClass.newInstance();
-            } catch (Exception e) {
-                throw new RuntimeException("registryServiceType unKnow,error is ", e);
-            }
-        }
-        URL url = new URL();
-        url.setApplicationName(CLIENT_CONFIG.getApplicationName());
-        url.setServiceName(serviceBean.getName());
-        url.addParameter("host", CommonUtil.getIpAddress());
-        Map<String, String> result = abstractRegister.getServiceWeightMap(serviceBean.getName());
-        URL_MAP.put(serviceBean.getName(), result);
-        abstractRegister.subscribe(url);
+        initRegister();
+        RegisterInfo registerInfo = RegisterInfo.builder()
+                .application(CLIENT_CONFIG.getApplicationName())
+                .serviceName(serviceBean.getName())
+                .build();
+        String path = registerInfo.buildParentProviderPath();
+        List<String> childrenList = registerService.getChildren(path);
+        List<RegisterInfo> registerInfoList = childrenList
+                .stream()
+                .map(RegisterInfo::parseRegister)
+                .collect(Collectors.toList());
+        registerInfoList.forEach(info -> {
+            registerService.subScribe(info.buildProviderPath(), new LoopWatcher());
+            PROVIDER_INFO_MAP.put(info.buildProviderPath(), info);
+        });
     }
 
     /**
@@ -221,12 +211,6 @@ public class Client {
         }
     }
 
-    private void subScribe(){
 
-    }
-
-    private List<String> retrievePaths() {
-
-    }
 
 }

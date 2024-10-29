@@ -2,6 +2,8 @@ package com.shaogezhu.easy.rpc.core.register;
 
 import org.apache.zookeeper.Watcher;
 
+import java.util.List;
+
 public interface RegisterService {
     void register(RegisterInfo registerInfo);
 
@@ -12,4 +14,7 @@ public interface RegisterService {
     void unSunScribe(String path);
 
     String getNode(String path);
+
+    List<String> getChildren(String path);
+
 }

@@ -12,7 +12,6 @@ import org.apache.zookeeper.Watcher;
 
 import static com.shaogezhu.easy.rpc.core.common.cache.CommonClientCache.PROVIDER_INFO_MAP;
 
-@NoArgsConstructor
 @AllArgsConstructor
 public class LoopWatcher implements Watcher {
     private static final Logger logger = LogManager.getLogger(LoopWatcher.class);

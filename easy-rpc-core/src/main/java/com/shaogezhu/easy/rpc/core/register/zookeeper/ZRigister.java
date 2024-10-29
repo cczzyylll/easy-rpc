@@ -1,9 +1,10 @@
 package com.shaogezhu.easy.rpc.core.register.zookeeper;
 
 import com.shaogezhu.easy.rpc.core.register.RegisterInfo;
-import com.shaogezhu.easy.rpc.core.register.RegisterServer;
 import com.shaogezhu.easy.rpc.core.register.RegisterService;
 import org.apache.zookeeper.Watcher;
+
+import java.util.List;
 
 public class ZRigister implements RegisterService {
     private ZookeeperClient client;
@@ -49,5 +50,10 @@ public class ZRigister implements RegisterService {
     @Override
     public String getNode(String path) {
         return client.getNode(path);
+    }
+
+    @Override
+    public List<String> getChildren(String path) {
+        return client.getChildren(path);
     }
 }

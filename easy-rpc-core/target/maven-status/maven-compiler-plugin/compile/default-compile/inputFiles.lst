@@ -1,4 +1,3 @@
-E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\register\zookeeper\aRegister.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\register\zookeeper\ZookeeperClient.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\server\ServiceWrapper.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\common\event\data\ProviderNodeInfo.java
@@ -7,12 +6,13 @@ E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\c
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\common\RpcProtocol.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\common\event\listener\ProviderNodeUpdateListener.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\common\event\listener\ServiceUpdateListener.java
-E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\register\RegisterServer.java
+E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\register\RegisterService.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\proxy\jdk\JDKProxyFactory.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\common\config\PropertiesLoader.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\filter\client\ClientLogFilterImpl.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\register\URL.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\client\Client.java
+E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\register\zookeeper\ZRigister.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\filter\server\ServerAfterFilterChain.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\client\RpcReferenceWrapper.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\router\RotateRouterImpl.java
@@ -67,6 +67,7 @@ E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\f
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\serialize\jdk\JdkSerializeFactory.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\common\event\listener\ServiceDestroyListener.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\common\RpcInvocation.java
+E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\register\zookeeper\LoopWatcher.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\common\utils\CommonUtil.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\server\ServerShutdownHook.java
 E:\XMU\github\easy-rpc\easy-rpc-core\src\main\java\com\shaogezhu\easy\rpc\core\common\constants\RpcConstants.java

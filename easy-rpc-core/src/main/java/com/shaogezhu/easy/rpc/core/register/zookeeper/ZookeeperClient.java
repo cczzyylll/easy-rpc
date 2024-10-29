@@ -164,4 +164,14 @@ public class ZookeeperClient {
             logger.error(e);
         }
     }
+
+    public List<String> getChildren(String path) {
+        try {
+            return client.getChildren().forPath(path);
+        }
+        catch (Exception e) {
+            logger.error(e);
+        }
+        return Collections.emptyList();
+    }
 }

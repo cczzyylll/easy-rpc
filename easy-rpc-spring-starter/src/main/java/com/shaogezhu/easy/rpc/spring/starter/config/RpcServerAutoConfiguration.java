@@ -57,5 +57,4 @@ public class RpcServerAutoConfiguration implements InitializingBean, Application
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
-
 }

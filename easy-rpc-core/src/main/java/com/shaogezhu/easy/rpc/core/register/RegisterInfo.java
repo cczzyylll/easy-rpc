@@ -1,6 +1,7 @@
 package com.shaogezhu.easy.rpc.core.register;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,9 +11,10 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class RegisterInfo {
     private final static String ROOT = "easy-rpc";
-    private final static String PROVIDER = "PROVIDER";
+    private final static String PROVIDER = "provider";
     private final static String CONSUMER = "consumer";
     private final static String IP = "ip";
     private final static String PORT = "port";
@@ -89,6 +91,10 @@ public class RegisterInfo {
 
     private String getPort() {
         return parameters.getOrDefault(PORT, null);
+    }
+
+    public String buildParentProviderPath() {
+        return "/" + ROOT + "/" + application + "/" + serviceName + "/" + PROVIDER + "/";
     }
 
 }

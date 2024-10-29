@@ -7,13 +7,14 @@ com\shaogezhu\easy\rpc\core\common\cache\CommonClientCache.class
 com\shaogezhu\easy\rpc\core\client\Client$AsyncSendJob.class
 com\shaogezhu\easy\rpc\core\router\RotateRouterImpl.class
 com\shaogezhu\easy\rpc\core\common\event\RpcEvent.class
+com\shaogezhu\easy\rpc\core\register\RegisterService.class
 com\shaogezhu\easy\rpc\core\server\ServerShutdownHook$1.class
 com\shaogezhu\easy\rpc\core\register\URL.class
 com\shaogezhu\easy\rpc\core\filter\server\ServerServiceBeforeLimitFilterImpl.class
 com\shaogezhu\easy\rpc\core\common\event\data\ProviderNodeInfo.class
+com\shaogezhu\easy\rpc\core\register\RegisterInfo$RegisterInfoBuilder.class
 com\shaogezhu\easy\rpc\core\filter\server\ServerTokenFilterImpl.class
 com\shaogezhu\easy\rpc\core\common\exception\RpcException.class
-com\shaogezhu\easy\rpc\core\register\RegisterServer.class
 com\shaogezhu\easy\rpc\core\server\ServiceWrapper.class
 com\shaogezhu\easy\rpc\core\server\ServerChannelReadData.class
 com\shaogezhu\easy\rpc\core\serialize\kryo\KryoSerializeFactory.class
@@ -44,6 +45,7 @@ com\shaogezhu\easy\rpc\core\common\event\listener\ProviderNodeUpdateListener.cla
 com\shaogezhu\easy\rpc\core\common\event\listener\ServiceUpdateListener.class
 com\shaogezhu\easy\rpc\core\register\zookeeper\ZookeeperRegister.class
 com\shaogezhu\easy\rpc\core\filter\client\DirectInvokeFilterImpl.class
+com\shaogezhu\easy\rpc\core\register\zookeeper\LoopWatcher.class
 com\shaogezhu\easy\rpc\core\common\ChannelFutureWrapper.class
 com\shaogezhu\easy\rpc\core\common\RpcProtocol.class
 com\shaogezhu\easy\rpc\core\common\RpcInvocation.class
@@ -54,6 +56,7 @@ com\shaogezhu\easy\rpc\core\client\Client$1.class
 com\shaogezhu\easy\rpc\core\common\exception\MaxServiceLimitRequestException.class
 com\shaogezhu\easy\rpc\core\server\Server$2.class
 com\shaogezhu\easy\rpc\core\proxy\jdk\JDKProxyFactory.class
+com\shaogezhu\easy\rpc\core\register\zookeeper\LoopWatcher$1.class
 com\shaogezhu\easy\rpc\core\register\RegistryService.class
 com\shaogezhu\easy\rpc\core\register\zookeeper\ZookeeperRegister$1.class
 com\shaogezhu\easy\rpc\core\dispatcher\ServerChannelDispatcher$ServerJobCoreHandle.class
@@ -63,7 +66,6 @@ com\shaogezhu\easy\rpc\core\common\cache\CommonServerCache.class
 com\shaogezhu\easy\rpc\core\filter\Filter.class
 com\shaogezhu\easy\rpc\core\server\Server.class
 com\shaogezhu\easy\rpc\core\common\config\ServerConfig.class
-com\shaogezhu\easy\rpc\core\register\zookeeper\aRegister.class
 com\shaogezhu\easy\rpc\core\spi\ExtensionLoader.class
 com\shaogezhu\easy\rpc\core\register\zookeeper\ZookeeperRegister$2.class
 com\shaogezhu\easy\rpc\core\filter\client\ClientFilterChain.class
@@ -77,6 +79,7 @@ com\shaogezhu\easy\rpc\core\proxy\jdk\JDKClientInvocationHandler.class
 com\shaogezhu\easy\rpc\core\common\config\ClientConfig.class
 com\shaogezhu\easy\rpc\core\common\event\listener\ServiceDestroyListener.class
 com\shaogezhu\easy\rpc\core\filter\server\ServerLogFilterImpl.class
+com\shaogezhu\easy\rpc\core\register\zookeeper\ZRigister.class
 com\shaogezhu\easy\rpc\core\common\utils\CommonUtil.class
 com\shaogezhu\easy\rpc\core\filter\client\ClientLogFilterImpl.class
 com\shaogezhu\easy\rpc\core\register\zookeeper\ZookeeperRegister$3.class

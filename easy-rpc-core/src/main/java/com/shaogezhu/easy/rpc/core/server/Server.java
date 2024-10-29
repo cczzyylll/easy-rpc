@@ -13,6 +13,7 @@ import com.shaogezhu.easy.rpc.core.filter.server.ServerBeforeFilterChain;
 import com.shaogezhu.easy.rpc.core.register.AbstractRegister;
 import com.shaogezhu.easy.rpc.core.register.RegistryService;
 import com.shaogezhu.easy.rpc.core.register.URL;
+import com.shaogezhu.easy.rpc.core.register.zookeeper.ZRigister;
 import com.shaogezhu.easy.rpc.core.serialize.SerializeFactory;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
@@ -29,16 +30,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static com.shaogezhu.easy.rpc.core.common.cache.CommonClientCache.EXTENSION_LOADER;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonServerCache.PROVIDER_CLASS_MAP;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonServerCache.PROVIDER_SERVICE_WRAPPER_MAP;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonServerCache.PROVIDER_URL_SET;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonServerCache.REGISTRY_SERVICE;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonServerCache.SERVER_AFTER_FILTER_CHAIN;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonServerCache.SERVER_BEFORE_FILTER_CHAIN;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonServerCache.SERVER_CHANNEL_DISPATCHER;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonServerCache.SERVER_CONFIG;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonServerCache.SERVER_SERIALIZE_FACTORY;
-import static com.shaogezhu.easy.rpc.core.common.cache.CommonServerCache.SERVER_SERVICE_SEMAPHORE_MAP;
+import static com.shaogezhu.easy.rpc.core.common.cache.CommonServerCache.*;
 import static com.shaogezhu.easy.rpc.core.common.constants.RpcConstants.DEFAULT_DECODE_CHAR;
 import static com.shaogezhu.easy.rpc.core.spi.ExtensionLoader.EXTENSION_LOADER_CLASS_CACHE;
 
@@ -152,15 +144,8 @@ public class Server {
         if (classes.length > 1) {
             throw new RuntimeException("service must only had one interfaces!");
         }
-        if (REGISTRY_SERVICE == null) {
-            try {
-                EXTENSION_LOADER.loadExtension(RegistryService.class);
-                Map<String, Class<?>> registryClassMap = EXTENSION_LOADER_CLASS_CACHE.get(RegistryService.class.getName());
-                Class<?> registryClass = registryClassMap.get(SERVER_CONFIG.getRegisterType());
-                REGISTRY_SERVICE = (AbstractRegister) registryClass.newInstance();
-            } catch (Exception e) {
-                throw new RuntimeException("registryServiceType unKnow,error is ", e);
-            }
+        if (REGISTER_SERVICE == null) {
+            initRegister();
         }
         //默认选择该对象的第一个实现接口
         Class<?> interfaceClass = classes[0];
@@ -180,6 +165,16 @@ public class Server {
             if (CommonUtil.isNotEmpty(serviceWrapper.getServiceToken())) {
                 PROVIDER_SERVICE_WRAPPER_MAP.put(interfaceClass.getName(), serviceWrapper);
             }
+    }
+
+    private void initRegister() {
+        if (REGISTER_SERVICE == null) {
+            try {
+                REGISTER_SERVICE = new ZRigister("localhost:2181");
+            } catch (Exception e) {
+                throw new RuntimeException("registryServiceType unKnow,error is ", e);
+            }
+        }
     }
 
 }
