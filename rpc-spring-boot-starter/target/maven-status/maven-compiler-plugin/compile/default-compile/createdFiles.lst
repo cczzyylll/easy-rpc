@@ -1,0 +1,4 @@
+rpc\spring\boot\starter\config\ServerAutoConfiguration.class
+rpc\spring\boot\starter\config\ClientAutoConfiguration.class
+rpc\spring\boot\starter\common\RpcReference.class
+rpc\spring\boot\starter\common\RpcService.class

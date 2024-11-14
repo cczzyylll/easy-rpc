@@ -1,0 +1,3 @@
+rpc\provider\service\impl\DataServiceImpl.class
+rpc\provider\service\impl\UserServiceImpl.class
+rpc\provider\ProviderApplication.class
