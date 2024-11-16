@@ -30,14 +30,14 @@ public class ClientAutoConfiguration{
     Client rpcClient() {
         try {
             Client client = new Client();
-            client.initClientConfig();
-            client.initClientApplication();
+            client.loadClientConfig();
+            client.initClient();
             logger.info("rpc client start successfully");
             doSubscribe(client);
             return client;
         }
         catch (Exception e) {
-            logger.error(e);
+            logger.error(e.getMessage(),e);
             return null;
         }
     }
@@ -45,22 +45,22 @@ public class ClientAutoConfiguration{
     private void doSubscribe(Client client) {
         Map<String, Object> beanMap = applicationContext.getBeansOfType(Object.class);
         for (String beanName : beanMap.keySet()) {
-            Field[] fields = beanName.getClass().getDeclaredFields();
+            Field[] fields = beanMap.get(beanName).getClass().getDeclaredFields();
             for (Field field : fields) {
-                logger.info(fields.getClass().getName());
                 if (field.isAnnotationPresent(RpcReference.class)) {
                     RpcReference rpcReference = field.getAnnotation(RpcReference.class);
                     try {
-                        field.setAccessible(true);
+                        logger.info(field.getType());
+//                        field.setAccessible(true);
 //                        Object refObj = field.get(bean);
-                        RpcReferenceWrapper rpcReferenceWrapper = new RpcReferenceWrapper();
-                        rpcReferenceWrapper.setAimClass(field.getType());
-                        rpcReferenceWrapper.setGroup(rpcReference.group());
-                        rpcReferenceWrapper.setServiceToken(rpcReference.serviceToken());
-                        rpcReferenceWrapper.setUrl(rpcReference.url());
-                        rpcReferenceWrapper.setTimeOut(rpcReference.timeOut());
-                        rpcReferenceWrapper.setRetry(rpcReference.retry());
-                        rpcReferenceWrapper.setAsync(rpcReference.async());
+//                        RpcReferenceWrapper rpcReferenceWrapper = new RpcReferenceWrapper();
+//                        rpcReferenceWrapper.setAimClass(field.getType());
+//                        rpcReferenceWrapper.setGroup(rpcReference.group());
+//                        rpcReferenceWrapper.setServiceToken(rpcReference.serviceToken());
+//                        rpcReferenceWrapper.setUrl(rpcReference.url());
+//                        rpcReferenceWrapper.setTimeOut(rpcReference.timeOut());
+//                        rpcReferenceWrapper.setRetry(rpcReference.retry());
+//                        rpcReferenceWrapper.setAsync(rpcReference.async());
 //                        refObj = rpcReference.get(rpcReferenceWrapper);
 //                        field.set(bean, refObj);
                         client.doSubscribeService(field.getType());

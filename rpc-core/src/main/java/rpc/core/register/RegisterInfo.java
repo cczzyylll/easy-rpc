@@ -61,7 +61,7 @@ public class RegisterInfo {
     }
 
     public String buildParentProviderPath() {
-        return "/" + ROOT + "/" + application + "/" + serviceName + "/" + PROVIDER + "/";
+        return "/" + ROOT + "/" + application + "/" + serviceName + "/" + PROVIDER;
     }
 
 }

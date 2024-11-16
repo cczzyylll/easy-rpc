@@ -1,10 +1,5 @@
 package rpc.core.common.constants;
 
-/**
- * @Author peng
- * @Date 2023/3/4
- * @description:
- */
 public class RpcConstants {
 
     public static final short MAGIC_NUMBER=19832;

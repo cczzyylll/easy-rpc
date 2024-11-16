@@ -17,13 +17,9 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @Author peng
- * @Date 2023/2/24
- * @description: 公用缓存 存储请求队列等公共信息
- */
 public class CommonClientCache {
     public static RegisterService REGISTER_SERVICE;
+    public static ClientConfig CLIENT_CONFIG;
     public static Map<String, RegisterInfo> PROVIDER_INFO_MAP = new HashMap<>();
     /**
      * 发送队列
@@ -53,7 +49,7 @@ public class CommonClientCache {
     //客户但过滤链
     public static ClientFilterChain CLIENT_FILTER_CHAIN;
     //客户端配置类
-    public static ClientConfig CLIENT_CONFIG;
+
     //SPI加载组件
     public static ExtensionLoader EXTENSION_LOADER = new ExtensionLoader();
 }

@@ -1,10 +1,5 @@
 package rpc.core.common.config;
 
-/**
- * @Author peng
- * @Date 2023/2/25
- * @description: 客户端配置类
- */
 public class ClientConfig {
 
     private String registerAddr;

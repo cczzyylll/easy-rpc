@@ -48,7 +48,7 @@ import static rpc.core.spi.ExtensionLoader.EXTENSION_LOADER_CLASS_CACHE;
 public class Client {
     private static final Logger logger = LogManager.getLogger(Client.class);
 
-    public static RegisterService registerService;
+
     private AbstractRegister abstractRegister;
 
     private final Bootstrap bootstrap = new Bootstrap();
@@ -57,7 +57,8 @@ public class Client {
         return bootstrap;
     }
 
-    public RpcReference initClientApplication() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public RpcReference initClient() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        initRegister();
         NioEventLoopGroup clientGroup = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(clientGroup);
@@ -78,74 +79,75 @@ public class Client {
         ConnectionHandler.setBootstrap(bootstrap);
 
         //初始化监听器
-        RpcListenerLoader rpcListenerLoader = new RpcListenerLoader();
-        rpcListenerLoader.init();
+//        RpcListenerLoader rpcListenerLoader = new RpcListenerLoader();
+//        rpcListenerLoader.init();
 
         //初始化路由策略
-        String routerStrategy = CommonClientCache.CLIENT_CONFIG.getRouterStrategy();
-        CommonClientCache.EXTENSION_LOADER.loadExtension(Router.class);
-        LinkedHashMap<String, Class<?>> routerMap = EXTENSION_LOADER_CLASS_CACHE.get(Router.class.getName());
-        Class<?> routerClass = routerMap.get(routerStrategy);
-        if (routerClass == null) {
-            throw new RuntimeException("no match routerStrategyClass for " + routerStrategy);
-        }
-        CommonClientCache.ROUTER = (Router) routerClass.newInstance();
+//        String routerStrategy = CommonClientCache.CLIENT_CONFIG.getRouterStrategy();
+//        CommonClientCache.EXTENSION_LOADER.loadExtension(Router.class);
+//        LinkedHashMap<String, Class<?>> routerMap = EXTENSION_LOADER_CLASS_CACHE.get(Router.class.getName());
+//        Class<?> routerClass = routerMap.get(routerStrategy);
+//        if (routerClass == null) {
+//            throw new RuntimeException("no match routerStrategyClass for " + routerStrategy);
+//        }
+//        CommonClientCache.ROUTER = (Router) routerClass.newInstance();
 
-        //初始化序列化器
-        String clientSerialize = CommonClientCache.CLIENT_CONFIG.getClientSerialize();
-        CommonClientCache.EXTENSION_LOADER.loadExtension(SerializeFactory.class);
-        LinkedHashMap<String, Class<?>> serializeMap = EXTENSION_LOADER_CLASS_CACHE.get(SerializeFactory.class.getName());
-        Class<?> serializeClass = serializeMap.get(clientSerialize);
-        if (serializeClass == null) {
-            throw new RuntimeException("no match serializeClass for " + clientSerialize);
-        }
-        CommonClientCache.CLIENT_SERIALIZE_FACTORY = (SerializeFactory) serializeClass.newInstance();
-
-        //初始化过滤链
-        ClientFilterChain clientFilterChain = new ClientFilterChain();
-        CommonClientCache.EXTENSION_LOADER.loadExtension(ClientFilter.class);
-        LinkedHashMap<String, Class<?>> filterChainMap = EXTENSION_LOADER_CLASS_CACHE.get(ClientFilter.class.getName());
-        for (Map.Entry<String, Class<?>> filterChainEntry : filterChainMap.entrySet()) {
-            String filterChainKey = filterChainEntry.getKey();
-            Class<?> filterChainImpl = filterChainEntry.getValue();
-            if (filterChainImpl == null) {
-                throw new RuntimeException("no match filterChainImpl for " + filterChainKey);
-            }
-            clientFilterChain.addClientFilter((ClientFilter) filterChainImpl.newInstance());
-        }
-        CommonClientCache.CLIENT_FILTER_CHAIN = clientFilterChain;
-
-        //初始化代理工厂
-        String proxyType = CommonClientCache.CLIENT_CONFIG.getProxyType();
-        CommonClientCache.EXTENSION_LOADER.loadExtension(ProxyFactory.class);
-        LinkedHashMap<String, Class<?>> proxyTypeMap = EXTENSION_LOADER_CLASS_CACHE.get(ProxyFactory.class.getName());
-        Class<?> proxyTypeClass = proxyTypeMap.get(proxyType);
-        if (proxyTypeClass == null) {
-            throw new RuntimeException("no match proxyTypeClass for " + proxyType);
-        }
-        return new RpcReference((ProxyFactory) proxyTypeClass.newInstance());
+//        //初始化序列化器
+//        String clientSerialize = CommonClientCache.CLIENT_CONFIG.getClientSerialize();
+//        CommonClientCache.EXTENSION_LOADER.loadExtension(SerializeFactory.class);
+//        LinkedHashMap<String, Class<?>> serializeMap = EXTENSION_LOADER_CLASS_CACHE.get(SerializeFactory.class.getName());
+//        Class<?> serializeClass = serializeMap.get(clientSerialize);
+//        if (serializeClass == null) {
+//            throw new RuntimeException("no match serializeClass for " + clientSerialize);
+//        }
+//        CommonClientCache.CLIENT_SERIALIZE_FACTORY = (SerializeFactory) serializeClass.newInstance();
+//
+//        //初始化过滤链
+//        ClientFilterChain clientFilterChain = new ClientFilterChain();
+//        CommonClientCache.EXTENSION_LOADER.loadExtension(ClientFilter.class);
+//        LinkedHashMap<String, Class<?>> filterChainMap = EXTENSION_LOADER_CLASS_CACHE.get(ClientFilter.class.getName());
+//        for (Map.Entry<String, Class<?>> filterChainEntry : filterChainMap.entrySet()) {
+//            String filterChainKey = filterChainEntry.getKey();
+//            Class<?> filterChainImpl = filterChainEntry.getValue();
+//            if (filterChainImpl == null) {
+//                throw new RuntimeException("no match filterChainImpl for " + filterChainKey);
+//            }
+//            clientFilterChain.addClientFilter((ClientFilter) filterChainImpl.newInstance());
+//        }
+//        CommonClientCache.CLIENT_FILTER_CHAIN = clientFilterChain;
+//
+//        //初始化代理工厂
+//        String proxyType = CommonClientCache.CLIENT_CONFIG.getProxyType();
+//        CommonClientCache.EXTENSION_LOADER.loadExtension(ProxyFactory.class);
+//        LinkedHashMap<String, Class<?>> proxyTypeMap = EXTENSION_LOADER_CLASS_CACHE.get(ProxyFactory.class.getName());
+//        Class<?> proxyTypeClass = proxyTypeMap.get(proxyType);
+//        if (proxyTypeClass == null) {
+//            throw new RuntimeException("no match proxyTypeClass for " + proxyType);
+//        }
+//        return new RpcReference((ProxyFactory) proxyTypeClass.newInstance());
+        return null;
     }
 
-    public void initClientConfig() {
+    public void loadClientConfig() {
         CommonClientCache.CLIENT_CONFIG = PropertiesBootstrap.loadClientConfigFromLocal();
     }
 
     public void doSubscribeService(Class<?> serviceBean) {
-        logger.info(serviceBean.getName());
-        initRegister();
         RegisterInfo registerInfo = RegisterInfo.builder()
                 .application(CommonClientCache.CLIENT_CONFIG.getApplicationName())
                 .serviceName(serviceBean.getName())
                 .build();
         String path = registerInfo.buildParentProviderPath();
-        List<String> childrenList = registerService.getChildren(path);
-        List<RegisterInfo> registerInfoList = childrenList
+        List<String> childNodeNames = CommonClientCache.REGISTER_SERVICE.getChildren(path);
+            List<String> childDatas = childNodeNames
+                    .stream().map(childPath -> CommonClientCache.REGISTER_SERVICE.getNode(path + "/" + childPath))
+                            .collect(Collectors.toList());
+        List<RegisterInfo> registerInfoList = childDatas
                 .stream()
                 .map(RegisterInfo::parseRegister)
                 .collect(Collectors.toList());
         registerInfoList.forEach(info -> {
-            logger.info(info);
-            registerService.subScribe(info.buildProviderPath(), new LoopWatcher());
+            CommonClientCache.REGISTER_SERVICE.subScribe(info.buildProviderPath(), new LoopWatcher());
             CommonClientCache.PROVIDER_INFO_MAP.put(info.buildProviderPath(), info);
         });
     }
@@ -207,7 +209,7 @@ public class Client {
     private void initRegister() {
         if (CommonClientCache.REGISTER_SERVICE == null) {
             try {
-                CommonClientCache.REGISTER_SERVICE = new ZRigister("152.136.150.223:2181");
+                CommonClientCache.REGISTER_SERVICE = new ZRigister(CommonClientCache.CLIENT_CONFIG.getRegisterAddr());
             } catch (Exception e) {
                 throw new RuntimeException("registryServiceType unKnow,error is ", e);
             }

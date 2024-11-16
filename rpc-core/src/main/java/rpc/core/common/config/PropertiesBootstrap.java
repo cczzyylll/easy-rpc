@@ -4,11 +4,6 @@ import rpc.core.common.constants.RpcConstants;
 
 import java.io.IOException;
 
-/**
- * @Author peng
- * @Date 2023/3/11
- * @description:
- */
 public class PropertiesBootstrap {
 
     private volatile boolean configIsReady;
