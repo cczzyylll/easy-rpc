@@ -12,9 +12,7 @@ public class RpcReference {
         this.proxyFactory = proxyFactory;
     }
 
-    /**
-     * 根据接口类型获取代理对象
-     */
+
     public <T> T get(RpcReferenceWrapper<T> rpcReferenceWrapper) throws Throwable {
         initGlobalRpcReferenceConfig(rpcReferenceWrapper);
         return proxyFactory.getProxy(rpcReferenceWrapper);

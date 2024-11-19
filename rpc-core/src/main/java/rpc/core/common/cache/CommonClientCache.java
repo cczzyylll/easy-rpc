@@ -5,6 +5,7 @@ import rpc.core.common.ChannelFutureWrapper;
 import rpc.core.common.RpcInvocation;
 import rpc.core.common.config.ClientConfig;
 import rpc.core.filter.client.ClientFilterChain;
+import rpc.core.proxy.ProxyFactory;
 import rpc.core.register.RegisterInfo;
 import rpc.core.register.RegisterService;
 import rpc.core.register.URL;
@@ -18,10 +19,12 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CommonClientCache {
-    public static RegisterService REGISTER_SERVICE;
     public static ClientConfig CLIENT_CONFIG;
-    public static Map<String, RegisterInfo> PROVIDER_INFO_MAP = new HashMap<>();
+    public static RegisterService REGISTER_SERVICE;
+    public static ProxyFactory PROXY_FACTORY;
     public static BlockingQueue<RpcInvocation> SEND_QUEUE = new ArrayBlockingQueue<>(100);
+
+    public static Map<String, RegisterInfo> PROVIDER_INFO_MAP = new HashMap<>();
 
     public static Map<String,Object> RESP_MAP = new ConcurrentHashMap<>();
 
@@ -45,6 +48,5 @@ public class CommonClientCache {
     public static ClientFilterChain CLIENT_FILTER_CHAIN;
     //客户端配置类
 
-    //SPI加载组件
     public static ExtensionLoader EXTENSION_LOADER = new ExtensionLoader();
 }

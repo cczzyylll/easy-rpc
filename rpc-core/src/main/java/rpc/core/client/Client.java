@@ -57,7 +57,7 @@ public class Client {
         return bootstrap;
     }
 
-    public RpcReference initClient() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public void initClient() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         initRegister();
         NioEventLoopGroup clientGroup = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
@@ -116,16 +116,7 @@ public class Client {
 //        }
 //        CommonClientCache.CLIENT_FILTER_CHAIN = clientFilterChain;
 //
-//        //初始化代理工厂
-//        String proxyType = CommonClientCache.CLIENT_CONFIG.getProxyType();
-//        CommonClientCache.EXTENSION_LOADER.loadExtension(ProxyFactory.class);
-//        LinkedHashMap<String, Class<?>> proxyTypeMap = EXTENSION_LOADER_CLASS_CACHE.get(ProxyFactory.class.getName());
-//        Class<?> proxyTypeClass = proxyTypeMap.get(proxyType);
-//        if (proxyTypeClass == null) {
-//            throw new RuntimeException("no match proxyTypeClass for " + proxyType);
-//        }
-//        return new RpcReference((ProxyFactory) proxyTypeClass.newInstance());
-        return null;
+        initProxyFactory();
     }
 
     public void loadClientConfig() {
@@ -170,15 +161,12 @@ public class Client {
         }
     }
 
-    /**
-     * 开启发送线程，专门从事将数据包发送给服务端
-     */
     public void startClient() {
         Thread asyncSendJob = new Thread(new AsyncSendJob(), "ClientAsyncSendJobThread");
         asyncSendJob.start();
     }
 
-    class AsyncSendJob implements Runnable {
+    static class AsyncSendJob implements Runnable {
 
         public AsyncSendJob() { }
 
@@ -186,15 +174,10 @@ public class Client {
         public void run() {
             while (true) {
                 try {
-                    //阻塞模式
                     RpcInvocation data = CommonClientCache.SEND_QUEUE.take();
-                    //进行序列化
                     byte[] serialize = CommonClientCache.CLIENT_SERIALIZE_FACTORY.serialize(data);
-                    //将RpcInvocation封装到RpcProtocol对象中，然后发送给服务端
                     RpcProtocol rpcProtocol = new RpcProtocol(serialize);
-                    //获取netty通道
                     ChannelFuture channelFuture = ConnectionHandler.getChannelFuture(data);
-                    //netty的通道负责发送数据给服务端
                     channelFuture.channel().writeAndFlush(rpcProtocol);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -211,5 +194,16 @@ public class Client {
                 throw new RuntimeException("registryServiceType unKnow,error is ", e);
             }
         }
+    }
+
+    private void initProxyFactory() throws InstantiationException, IllegalAccessException, IOException, ClassNotFoundException {
+        String proxyType = CommonClientCache.CLIENT_CONFIG.getProxyType();
+        CommonClientCache.EXTENSION_LOADER.loadExtension(ProxyFactory.class);
+        LinkedHashMap<String, Class<?>> proxyTypeMap = EXTENSION_LOADER_CLASS_CACHE.get(ProxyFactory.class.getName());
+        Class<?> proxyTypeClass = proxyTypeMap.get(proxyType);
+        if (proxyTypeClass == null) {
+            throw new RuntimeException("no match proxyTypeClass for " + proxyType);
+        }
+        CommonClientCache.PROXY_FACTORY = (ProxyFactory) proxyTypeClass.newInstance();
     }
 }

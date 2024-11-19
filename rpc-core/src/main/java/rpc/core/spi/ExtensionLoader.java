@@ -9,11 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @Author peng
- * @Date 2023/3/6
- * @description: 自定义实现SPI加载组件
- */
+
 public class ExtensionLoader {
 
     public static String EXTENSION_LOADER_DIR_PREFIX = "META-INF/easy-rpc/";

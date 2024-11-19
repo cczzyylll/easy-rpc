@@ -2,7 +2,7 @@ package rpc.core.common.constants;
 
 public class RpcConstants {
 
-    public static final short MAGIC_NUMBER=19832;
+    public static final short MAGIC_NUMBER = 19832;
 
     public static final String JDK_PROXY_TYPE = "jdk";
 

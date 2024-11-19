@@ -1,82 +1,75 @@
 package rpc.core.client;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.checkerframework.common.value.qual.ArrayLen;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @Author peng
- * @Date 2023/3/4
- * @description: rpc远程调用包装类
- */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class RpcReferenceWrapper<T> {
+    private static String RETRY = "retry";
+    private static String TIME_OUT = "timeOut";
+    private static String ASYNC = "async";
+    private static String URL = "url";
+    private static String SERVICE_TOKEN = "serviceToken";
+    private static String GROUP = "group";
 
     private Class<T> aimClass;
+    private Map<String, Object> callSettings = new ConcurrentHashMap<>();
 
-    private Map<String,Object> attatchments = new ConcurrentHashMap<>();
-
-    public Class<T> getAimClass() {
-        return aimClass;
+    public int getRetry() {
+        return (int) callSettings.getOrDefault(RETRY, 0);
     }
 
-    public void setAimClass(Class<T> aimClass) {
-        this.aimClass = aimClass;
-    }
-
-    /**
-     * 失败重试次数
-     */
-    public int getRetry(){
-        return (int) attatchments.getOrDefault("retry",0);
-    }
-
-    public void setRetry(int retry){
-        this.attatchments.put("retry",retry);
+    public void setRetry(int retry) {
+        callSettings.put(RETRY, retry);
     }
 
     public void setTimeOut(int timeOut) {
-        attatchments.put("timeOut", timeOut);
+        callSettings.put(TIME_OUT, timeOut);
     }
 
     public String getTimeOut() {
-        return String.valueOf(attatchments.getOrDefault("timeOut",""));
-    }
-    public boolean isAsync(){
-        return Boolean.parseBoolean(String.valueOf(attatchments.get("async")));
+        return String.valueOf(callSettings.getOrDefault(TIME_OUT, ""));
     }
 
-    public void setAsync(boolean async){
-        this.attatchments.put("async",async);
+    public boolean isAsync() {
+        return Boolean.parseBoolean(String.valueOf(callSettings.get(ASYNC)));
     }
 
-    public String getUrl(){
-        return String.valueOf(attatchments.get("url"));
+    public void setAsync(boolean async) {
+        this.callSettings.put(ASYNC, async);
     }
 
-    public void setUrl(String url){
-        attatchments.put("url",url);
+    public String getUrl() {
+        return String.valueOf(callSettings.get(URL));
     }
 
-    public String getServiceToken(){
-        return String.valueOf(attatchments.get("serviceToken"));
+    public void setUrl(String url) {
+        callSettings.put(URL, url);
     }
 
-    public void setServiceToken(String serviceToken){
-        attatchments.put("serviceToken",serviceToken);
+    public String getServiceToken() {
+        return String.valueOf(callSettings.get(SERVICE_TOKEN));
     }
 
-    public String getGroup(){
-        return String.valueOf(attatchments.get("group"));
+    public void setServiceToken(String serviceToken) {
+        callSettings.put(SERVICE_TOKEN, serviceToken);
     }
 
-    public void setGroup(String group){
-        attatchments.put("group",group);
+    public String getGroup() {
+        return String.valueOf(callSettings.get(GROUP));
     }
 
-    public Map<String, Object> getAttatchments() {
-        return attatchments;
+    public void setGroup(String group) {
+        callSettings.put(GROUP, group);
     }
 
-    public void setAttatchments(Map<String, Object> attatchments) {
-        this.attatchments = attatchments;
-    }
 }

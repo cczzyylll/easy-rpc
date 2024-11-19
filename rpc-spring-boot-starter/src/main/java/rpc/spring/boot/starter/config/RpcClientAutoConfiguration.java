@@ -1,24 +1,24 @@
-//package rpc.spring.boot.starter.config;
-//
-//import rpc.core.client.Client;
-//import rpc.core.client.RpcReference;
-//import rpc.core.client.RpcReferenceWrapper;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-//import org.springframework.beans.BeansException;
-//import org.springframework.beans.factory.config.BeanPostProcessor;
-//import org.springframework.boot.context.event.ApplicationReadyEvent;
-//import org.springframework.context.ApplicationListener;
-//
-//import java.lang.reflect.Field;
-//
-//import static rpc.core.common.cache.CommonClientCache.CLIENT_CONFIG;
-//
-///**
-// * @Author peng
-// * @Date 2023/3/11
-// * @description: 客户端自动配置类
-// */
+//////package rpc.spring.boot.starter.config;
+//////
+//////import rpc.core.client.Client;
+//////import rpc.core.client.RpcReference;
+//////import rpc.core.client.RpcReferenceWrapper;
+//////import org.slf4j.Logger;
+//////import org.slf4j.LoggerFactory;
+//////import org.springframework.beans.BeansException;
+//////import org.springframework.beans.factory.config.BeanPostProcessor;
+//////import org.springframework.boot.context.event.ApplicationReadyEvent;
+//////import org.springframework.context.ApplicationListener;
+//////
+//////import java.lang.reflect.Field;
+//////
+//////import static rpc.core.common.cache.CommonClientCache.CLIENT_CONFIG;
+//////
+///////**
+////// * @Author peng
+////// * @Date 2023/3/11
+////// * @description: 客户端自动配置类
+////// */
 //public class RpcClientAutoConfiguration implements BeanPostProcessor, ApplicationListener<ApplicationReadyEvent> {
 //
 //    private static RpcReference rpcReference = null;
