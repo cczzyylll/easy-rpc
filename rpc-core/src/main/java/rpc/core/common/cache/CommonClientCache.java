@@ -21,13 +21,8 @@ public class CommonClientCache {
     public static RegisterService REGISTER_SERVICE;
     public static ClientConfig CLIENT_CONFIG;
     public static Map<String, RegisterInfo> PROVIDER_INFO_MAP = new HashMap<>();
-    /**
-     * 发送队列
-     */
     public static BlockingQueue<RpcInvocation> SEND_QUEUE = new ArrayBlockingQueue<>(100);
-    /**
-     * 保存处理结果<key:UUID,value:对象>
-     */
+
     public static Map<String,Object> RESP_MAP = new ConcurrentHashMap<>();
 
     //当前Client订阅了哪些服务serviceName->URL

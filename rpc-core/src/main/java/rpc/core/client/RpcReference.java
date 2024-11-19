@@ -4,11 +4,6 @@ import rpc.core.common.utils.CommonUtil;
 import rpc.core.proxy.ProxyFactory;
 import rpc.core.common.cache.CommonClientCache;
 
-/**
- * @Author peng
- * @Date 2023/2/25
- * @description: rpc远程调用类
- */
 public class RpcReference {
 
     public ProxyFactory proxyFactory;

@@ -178,9 +178,6 @@ public class Client {
         asyncSendJob.start();
     }
 
-    /**
-     * 异步发送信息任务
-     */
     class AsyncSendJob implements Runnable {
 
         public AsyncSendJob() { }
@@ -215,7 +212,4 @@ public class Client {
             }
         }
     }
-
-
-
 }

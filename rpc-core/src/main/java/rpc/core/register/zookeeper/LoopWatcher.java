@@ -42,9 +42,12 @@ public class LoopWatcher implements Watcher {
     }
 
     private void handleNodeDataChange(String path) {
+        logger.info("nodeDataChange path :" + path);
         String data = getData(path);
         RegisterInfo registerInfo = RegisterInfo.parseRegister(data);
         CommonClientCache.PROVIDER_INFO_MAP.put(path, registerInfo);
+        logger.info(CommonClientCache.PROVIDER_INFO_MAP);
+        CommonClientCache.REGISTER_SERVICE.subScribe(path, new LoopWatcher());
     }
 
     private String getData(String path) {
