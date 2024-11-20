@@ -1,0 +1,3 @@
+clientLogFilterImpl=rpc.core.filter.client.ClientLogFilterImpl
+directInvokeFilterImpl=rpc.core.filter.client.DirectInvokeFilterImpl
+groupFilterImpl=rpc.core.filter.client.GroupFilterImpl

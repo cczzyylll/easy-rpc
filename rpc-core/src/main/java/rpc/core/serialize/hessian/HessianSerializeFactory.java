@@ -7,11 +7,6 @@ import rpc.core.serialize.SerializeFactory;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-/**
- * @Author peng
- * @Date 2023/3/4
- * @description: Hessian序列化工厂
- */
 public class HessianSerializeFactory implements SerializeFactory {
 
     @Override

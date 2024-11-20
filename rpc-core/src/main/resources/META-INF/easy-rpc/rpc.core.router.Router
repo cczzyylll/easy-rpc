@@ -1,0 +1,2 @@
+random=rpc.core.router.RandomRouterImpl
+rotate=rpc.core.router.RotateRouterImpl

@@ -4,11 +4,7 @@ import rpc.core.serialize.SerializeFactory;
 
 import java.io.*;
 
-/**
- * @Author peng
- * @Date 2023/3/4
- * @description: JDK序列化工厂
- */
+
 public class JdkSerializeFactory implements SerializeFactory {
 
 

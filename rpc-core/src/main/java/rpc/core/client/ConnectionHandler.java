@@ -15,11 +15,6 @@ import rpc.core.common.cache.CommonClientCache;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Author peng
- * @Date 2023/2/28
- * @description: 按照单一职责的设计原则，将与连接(建立、断开)有关的功能都统一封装在了一起.
- */
 public class ConnectionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionHandler.class);

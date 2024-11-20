@@ -1,0 +1,3 @@
+providerNodeUpdateListener=rpc.core.common.event.listener.ProviderNodeUpdateListener
+serviceDestroyListener=rpc.core.common.event.listener.ServiceDestroyListener
+serviceUpdateListener=rpc.core.common.event.listener.ServiceUpdateListener

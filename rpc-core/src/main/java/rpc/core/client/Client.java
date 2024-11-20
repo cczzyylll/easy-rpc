@@ -41,10 +41,6 @@ import java.util.stream.Collectors;
 import static rpc.core.common.constants.RpcConstants.DEFAULT_DECODE_CHAR;
 import static rpc.core.spi.ExtensionLoader.EXTENSION_LOADER_CLASS_CACHE;
 
-/**
- * @Author peng
- * @Date 2023/2/23 22:48
- */
 public class Client {
     private static final Logger logger = LogManager.getLogger(Client.class);
 
@@ -81,18 +77,8 @@ public class Client {
         //初始化监听器
 //        RpcListenerLoader rpcListenerLoader = new RpcListenerLoader();
 //        rpcListenerLoader.init();
-
-        //初始化路由策略
-//        String routerStrategy = CommonClientCache.CLIENT_CONFIG.getRouterStrategy();
-//        CommonClientCache.EXTENSION_LOADER.loadExtension(Router.class);
-//        LinkedHashMap<String, Class<?>> routerMap = EXTENSION_LOADER_CLASS_CACHE.get(Router.class.getName());
-//        Class<?> routerClass = routerMap.get(routerStrategy);
-//        if (routerClass == null) {
-//            throw new RuntimeException("no match routerStrategyClass for " + routerStrategy);
-//        }
-//        CommonClientCache.ROUTER = (Router) routerClass.newInstance();
+        initRouter();
         initSerializedFactory();
-//
 //        //初始化过滤链
 //        ClientFilterChain clientFilterChain = new ClientFilterChain();
 //        CommonClientCache.EXTENSION_LOADER.loadExtension(ClientFilter.class);
@@ -196,6 +182,17 @@ public class Client {
             throw new RuntimeException("no match proxyTypeClass for " + proxyType);
         }
         CommonClientCache.PROXY_FACTORY = (ProxyFactory) proxyTypeClass.newInstance();
+    }
+
+    private void initRouter() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        String routerStrategy = CommonClientCache.CLIENT_CONFIG.getRouterStrategy();
+        CommonClientCache.EXTENSION_LOADER.loadExtension(Router.class);
+        LinkedHashMap<String, Class<?>> routerMap = EXTENSION_LOADER_CLASS_CACHE.get(Router.class.getName());
+        Class<?> routerClass = routerMap.get(routerStrategy);
+        if (routerClass == null) {
+            throw new RuntimeException("no match routerStrategyClass for " + routerStrategy);
+        }
+        CommonClientCache.ROUTER = (Router) routerClass.newInstance();
     }
 
     private void initSerializedFactory() throws InstantiationException, IllegalAccessException, IOException, ClassNotFoundException {
