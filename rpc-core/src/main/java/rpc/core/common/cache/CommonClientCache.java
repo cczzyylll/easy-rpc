@@ -23,6 +23,7 @@ public class CommonClientCache {
     public static RegisterService REGISTER_SERVICE;
     public static ProxyFactory PROXY_FACTORY;
     public static BlockingQueue<RpcInvocation> SEND_QUEUE = new ArrayBlockingQueue<>(100);
+    public static SerializeFactory SERIALIZE_FACTORY;
 
     public static Map<String, RegisterInfo> PROVIDER_INFO_MAP = new HashMap<>();
 

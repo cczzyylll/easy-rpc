@@ -91,16 +91,7 @@ public class Client {
 //            throw new RuntimeException("no match routerStrategyClass for " + routerStrategy);
 //        }
 //        CommonClientCache.ROUTER = (Router) routerClass.newInstance();
-
-//        //初始化序列化器
-//        String clientSerialize = CommonClientCache.CLIENT_CONFIG.getClientSerialize();
-//        CommonClientCache.EXTENSION_LOADER.loadExtension(SerializeFactory.class);
-//        LinkedHashMap<String, Class<?>> serializeMap = EXTENSION_LOADER_CLASS_CACHE.get(SerializeFactory.class.getName());
-//        Class<?> serializeClass = serializeMap.get(clientSerialize);
-//        if (serializeClass == null) {
-//            throw new RuntimeException("no match serializeClass for " + clientSerialize);
-//        }
-//        CommonClientCache.CLIENT_SERIALIZE_FACTORY = (SerializeFactory) serializeClass.newInstance();
+        initSerializedFactory();
 //
 //        //初始化过滤链
 //        ClientFilterChain clientFilterChain = new ClientFilterChain();
@@ -205,5 +196,16 @@ public class Client {
             throw new RuntimeException("no match proxyTypeClass for " + proxyType);
         }
         CommonClientCache.PROXY_FACTORY = (ProxyFactory) proxyTypeClass.newInstance();
+    }
+
+    private void initSerializedFactory() throws InstantiationException, IllegalAccessException, IOException, ClassNotFoundException {
+        String serialize = CommonClientCache.CLIENT_CONFIG.getSerialize();
+        CommonClientCache.EXTENSION_LOADER.loadExtension(SerializeFactory.class);
+        LinkedHashMap<String, Class<?>> serializeMap = EXTENSION_LOADER_CLASS_CACHE.get(SerializeFactory.class.getName());
+        Class<?> serializeClass = serializeMap.get(serialize);
+        if (serializeClass == null) {
+            throw new RuntimeException("no match serialize for " + serialize);
+        }
+        CommonClientCache.CLIENT_SERIALIZE_FACTORY = (SerializeFactory) serializeClass.newInstance();
     }
 }

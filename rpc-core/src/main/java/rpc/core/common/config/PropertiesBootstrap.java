@@ -60,7 +60,7 @@ public class PropertiesBootstrap {
         clientConfig.setRegisterType(PropertiesLoader.getPropertiesNotBlank(REGISTER_TYPE));
         clientConfig.setProxyType(PropertiesLoader.getPropertiesStrDefault(PROXY_TYPE, RpcConstants.JDK_PROXY_TYPE));
         clientConfig.setRouterStrategy(PropertiesLoader.getPropertiesStrDefault(ROUTER_TYPE, RpcConstants.RANDOM_ROUTER_TYPE));
-        clientConfig.setClientSerialize(PropertiesLoader.getPropertiesStrDefault(CLIENT_SERIALIZE_TYPE, RpcConstants.JDK_SERIALIZE_TYPE));
+        clientConfig.setSerialize(PropertiesLoader.getPropertiesStrDefault(CLIENT_SERIALIZE_TYPE, RpcConstants.JDK_SERIALIZE_TYPE));
         clientConfig.setTimeOut(PropertiesLoader.getPropertiesIntegerDefault(CLIENT_DEFAULT_TIME_OUT, RpcConstants.DEFAULT_TIMEOUT));
         clientConfig.setMaxServerRespDataSize(PropertiesLoader.getPropertiesIntegerDefault(CLIENT_MAX_DATA_SIZE, RpcConstants.CLIENT_DEFAULT_MSG_LENGTH));
         return clientConfig;
