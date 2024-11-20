@@ -20,8 +20,8 @@ public class ClientLogFilterImpl implements ClientFilter {
 
     @Override
     public void doFilter(List<ChannelFutureWrapper> src, RpcInvocation rpcInvocation) {
-        rpcInvocation.getAttachments().put("c_app_name", CommonClientCache.CLIENT_CONFIG.getApplicationName());
-        logger.info(rpcInvocation.getAttachments().get("c_app_name") + " do invoke -----> " +
+        rpcInvocation.getCallSettings().put("c_app_name", CommonClientCache.CLIENT_CONFIG.getApplicationName());
+        logger.info(rpcInvocation.getCallSettings().get("c_app_name") + " do invoke -----> " +
                 rpcInvocation.getTargetServiceName() + "#" + rpcInvocation.getTargetMethod());
     }
 

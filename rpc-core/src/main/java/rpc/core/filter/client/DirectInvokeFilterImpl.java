@@ -16,7 +16,7 @@ public class DirectInvokeFilterImpl implements ClientFilter {
 
     @Override
     public void doFilter(List<ChannelFutureWrapper> src, RpcInvocation rpcInvocation) {
-        String url = (String) rpcInvocation.getAttachments().get("url");
+        String url = (String) rpcInvocation.getCallSettings().get("url");
         if (CommonUtil.isEmpty(url)) return;
 
         src.removeIf(channelFutureWrapper -> !(channelFutureWrapper.getHost() + ":" + channelFutureWrapper.getPort()).equals(url));

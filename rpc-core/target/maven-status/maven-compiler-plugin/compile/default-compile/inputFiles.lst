@@ -2,7 +2,6 @@ E:\XMU\github\easy-rpc\rpc-core\src\main\java\rpc\core\filter\client\ClientLogFi
 E:\XMU\github\easy-rpc\rpc-core\src\main\java\rpc\core\register\RegisterInfo.java
 E:\XMU\github\easy-rpc\rpc-core\src\main\java\rpc\core\serialize\jdk\JdkSerializeFactory.java
 E:\XMU\github\easy-rpc\rpc-core\src\main\java\rpc\core\server\Server.java
-E:\XMU\github\easy-rpc\rpc-core\src\main\java\rpc\core\client\RpcReference.java
 E:\XMU\github\easy-rpc\rpc-core\src\main\java\rpc\core\common\utils\CommonUtil.java
 E:\XMU\github\easy-rpc\rpc-core\src\main\java\rpc\core\filter\server\ServerAfterFilterChain.java
 E:\XMU\github\easy-rpc\rpc-core\src\main\java\rpc\core\client\Client.java

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.checkerframework.common.value.qual.ArrayLen;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -36,8 +35,8 @@ public class RpcReferenceWrapper<T> {
         callSettings.put(TIME_OUT, timeOut);
     }
 
-    public String getTimeOut() {
-        return String.valueOf(callSettings.getOrDefault(TIME_OUT, ""));
+    public long getTimeOut() {
+        return Long.parseLong(callSettings.getOrDefault(TIME_OUT, "").toString());
     }
 
     public boolean isAsync() {

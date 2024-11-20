@@ -17,7 +17,7 @@ public class ServerTokenFilterImpl implements ServerFilter {
 
     @Override
     public void doFilter(RpcInvocation rpcInvocation) {
-        String token = String.valueOf(rpcInvocation.getAttachments().get("serviceToken"));
+        String token = String.valueOf(rpcInvocation.getCallSettings().get("serviceToken"));
         if (!CommonServerCache.PROVIDER_SERVICE_WRAPPER_MAP.containsKey(rpcInvocation.getTargetServiceName())) {
             return;
         }
