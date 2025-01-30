@@ -1,0 +1,113 @@
+[33mcommit 44f6ac9997da1d33484f7808907ccd0281af0481[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Wed Nov 20 13:51:35 2024 +0800
+
+    SPI优化，后续重点关注Netty方面的通信机制
+
+[33mcommit 99b7af4973672d525059c6c7a09b83b5c5f3b352[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Wed Nov 20 13:44:18 2024 +0800
+
+    序列化的SPI修改完毕
+
+[33mcommit 607a70be23612c52240af8cdc2b7c2df113ae7d4[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Wed Nov 20 13:37:29 2024 +0800
+
+    jdk序列化已实现
+
+[33mcommit aba47c8b553ff13f9c1ff0ed5954e7aaa8d98696[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Tue Nov 19 16:47:27 2024 +0800
+
+    动态代理的时候，重试机制还需要考虑具体如何实现
+
+[33mcommit 46f3b854f5f2535db1cd170cd2671e260d26a711[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Tue Nov 19 15:03:06 2024 +0800
+
+    客户端实现Watcher监听通知机制
+
+[33mcommit 4a55253d865c3f63674e73dbfc3cd87de3e3dfa7[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Sat Nov 16 15:04:33 2024 +0800
+
+    客户端实现了当服务端删除节点，通过Watcher机制去删除客户端的内容
+
+[33mcommit eff95ab6bfc02e095c6056c5368fad5089aea093[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Thu Nov 14 23:47:19 2024 +0800
+
+    实现服务端的服务注册功能，使用@Configuration注解借助Spring Boot Starter机制实现自动的配置和自动注册，注册到Zookeeper上，且ZNode的格式改为JSON格式，使用到了FastJSON Maven依赖
+
+[33mcommit e72b72878763d554f5416aeac981cb23ac2bb779[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Thu Nov 14 23:47:07 2024 +0800
+
+    实现服务端的服务注册功能，使用@Configuration注解借助Spring Boot Starter机制实现自动的配置和自动注册，注册到Zookeeper上，且ZNode的格式改为JSON格式，使用到了FastJSON Maven依赖
+
+[33mcommit 49e5390aeb709757c8a6d8a41705a1534838577b[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Tue Oct 29 15:11:29 2024 +0800
+
+    服务端重构Zookeeper即注册
+
+[33mcommit 31822d414f263fd397955cc7d9993fa083ea115c[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Tue Oct 29 15:07:25 2024 +0800
+
+    服务端重构Zookeeper即注册
+
+[33mcommit f56ba171a6563ee41cc7b33897f41d1b4cb7a5ca[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Sat Oct 12 21:56:07 2024 +0800
+
+    修改注册中心，将客户端的注册方式由创建节点改为通知订阅
+
+[33mcommit f4354c546e233b81a0926122e477ac9b7b5b1b9c[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Sun Oct 6 23:26:03 2024 +0800
+
+    修改注册中心，将客户端的注册方式由创建节点改为通知订阅模式，20%
+
+[33mcommit 4ea40430d2060dcb08c899013ba487acd76d7378[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Sun Oct 6 23:25:32 2024 +0800
+
+    修改注册中心，将客户端的注册方式由创建节点改为通知订阅模式，20%
+
+[33mcommit 3c2493f1509633ee6be868181f89c7f6c8607b97[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Wed Sep 25 18:15:50 2024 +0800
+
+    1
+
+[33mcommit c71c93b36c90e1308afb56835e6757db9937ed52[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Wed Sep 25 18:07:29 2024 +0800
+
+    1
+
+[33mcommit 0e0d89e532f8c83e6272c23d09c34851f089bcc9[m
+Author: cczzyy <271582801@qq.com>
+Date:   Wed Sep 25 18:05:37 2024 +0800
+
+    Delete easy-rpc.log.1
+
+[33mcommit 4dfa7ded8ca8f5ed2336e0948a325a323a5b90c7[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Wed Sep 25 18:02:37 2024 +0800
+
+    1
+
+[33mcommit f539539166f4e71336cd39abc77010848bc2bfb5[m
+Author: cczzyylll <271582801@qq.com>
+Date:   Wed Sep 25 18:00:34 2024 +0800
+
+    1
+
+[33mcommit 069d28e73351f9e74e46d38e4b5b96cc5221c093[m
+Author: cczzyy <271582801@qq.com>
+Date:   Wed Sep 25 17:37:27 2024 +0800
+
+    Initial commit

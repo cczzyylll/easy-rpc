@@ -15,7 +15,7 @@ import rpc.core.filter.server.ServerAfterFilterChain;
 import rpc.core.filter.server.ServerBeforeFilterChain;
 import rpc.core.register.RegisterInfo;
 import rpc.core.register.URL;
-import rpc.core.register.zookeeper.ZRigister;
+import rpc.core.register.zookeeper.ZookeeperRegister;
 import rpc.core.serialize.SerializeFactory;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
@@ -40,21 +40,46 @@ import static rpc.core.register.RegisterInfo.*;
 
 public class Server {
     private static final Logger logger = LogManager.getLogger(Server.class);
+    private static final int QUEUE_SIZE = 1024;
+    private static final boolean IS_NAGLE = true;
+    private static final int SND_BUF_SIZE = 16 * 1024;
+    private static final int RCV_BUF_SIZE = 16 * 1024;
+    private static final boolean IS_KEEPALIVE = true;
+
 
     public void startServerApplication() throws InterruptedException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        initNioEventLoopGroup();
+        //初始化监听器
+        initListener();
+
+        //初始化序列化器
+        initSerialize();
+
+        //初始化过滤链
+        initFilterChain();
+
+
+        //初始化请求分发器
+        CommonServerCache.SERVER_CHANNEL_DISPATCHER.init(CommonServerCache.SERVER_CONFIG.getServerQueueSize(), CommonServerCache.SERVER_CONFIG.getServerBizThreadNums());
+        CommonServerCache.SERVER_CHANNEL_DISPATCHER.startDataConsume();
+    }
+
+    public void initServerConfig() {
+        CommonServerCache.SERVER_CONFIG = PropertiesBootstrap.loadServerConfigFromLocal();
+    }
+
+    private void initNioEventLoopGroup() throws InterruptedException {
         NioEventLoopGroup bossGroup = new NioEventLoopGroup();
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();
         ServerBootstrap bootstrap = new ServerBootstrap();
         bootstrap.group(bossGroup, workerGroup);
         bootstrap.channel(NioServerSocketChannel.class);
-        bootstrap.option(ChannelOption.TCP_NODELAY, true);
-        bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
-        bootstrap.option(ChannelOption.SO_SNDBUF, 16 * 1024)
-                .option(ChannelOption.SO_RCVBUF, 16 * 1024)
-                .option(ChannelOption.SO_KEEPALIVE, true);
+        bootstrap.option(ChannelOption.TCP_NODELAY, IS_NAGLE);
+        bootstrap.option(ChannelOption.SO_BACKLOG, QUEUE_SIZE);
+        bootstrap.option(ChannelOption.SO_SNDBUF, SND_BUF_SIZE)
+                .option(ChannelOption.SO_RCVBUF, RCV_BUF_SIZE)
+                .option(ChannelOption.SO_KEEPALIVE, IS_KEEPALIVE);
 
-        //服务端采用单一长连接的模式，这里所支持的最大连接数和机器本身的性能有关
-        //连接防护的handler应该绑定在Main-Reactor上
         bootstrap.handler(new MaxConnectionLimitHandler(CommonServerCache.SERVER_CONFIG.getMaxConnections()));
         bootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
             @Override
@@ -66,12 +91,16 @@ public class Server {
                 ch.pipeline().addLast(new ServerHandler());
             }
         });
+        bootstrap.bind(CommonServerCache.SERVER_CONFIG.getPort()).sync();
+    }
 
-        //初始化监听器
+
+    private void initListener() {
         RpcListenerLoader rpcListenerLoader = new RpcListenerLoader();
         rpcListenerLoader.init();
+    }
 
-        //初始化序列化器
+    private void initSerialize() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         String serverSerialize = CommonServerCache.SERVER_CONFIG.getServerSerialize();
         CommonClientCache.EXTENSION_LOADER.loadExtension(SerializeFactory.class);
         LinkedHashMap<String, Class<?>> serializeMap = ExtensionLoader.EXTENSION_LOADER_CLASS_CACHE.get(SerializeFactory.class.getName());
@@ -80,9 +109,9 @@ public class Server {
             throw new RuntimeException("no match serializeClass for " + serverSerialize);
         }
         CommonServerCache.SERVER_SERIALIZE_FACTORY = (SerializeFactory) serializeClass.newInstance();
+    }
 
-
-        //初始化过滤链
+    private void initFilterChain() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         ServerBeforeFilterChain serverBeforeFilterChain = new ServerBeforeFilterChain();
         ServerAfterFilterChain serverAfterFilterChain = new ServerAfterFilterChain();
         CommonClientCache.EXTENSION_LOADER.loadExtension(ServerFilter.class);
@@ -102,40 +131,7 @@ public class Server {
         }
         CommonServerCache.SERVER_BEFORE_FILTER_CHAIN = serverBeforeFilterChain;
         CommonServerCache.SERVER_AFTER_FILTER_CHAIN = serverAfterFilterChain;
-
-        //初始化请求分发器
-        CommonServerCache.SERVER_CHANNEL_DISPATCHER.init(CommonServerCache.SERVER_CONFIG.getServerQueueSize(), CommonServerCache.SERVER_CONFIG.getServerBizThreadNums());
-        CommonServerCache.SERVER_CHANNEL_DISPATCHER.startDataConsume();
-
-        //暴露服务端url
-        this.batchExportUrl();
-        bootstrap.bind(CommonServerCache.SERVER_CONFIG.getPort()).sync();
     }
-
-    public void initServerConfig() {
-        CommonServerCache.SERVER_CONFIG = PropertiesBootstrap.loadServerConfigFromLocal();
-    }
-
-    /**
-     * 将服务端的具体服务都暴露到注册中心
-     */
-    public void batchExportUrl() {
-        Thread task = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                for (URL url : CommonServerCache.PROVIDER_URL_SET) {
-                    CommonServerCache.REGISTRY_SERVICE.register(url);
-                }
-            }
-        });
-        task.start();
-    }
-
 
     public void registerService(ServiceWrapper serviceWrapper) {
         Object serviceBean = serviceWrapper.getServiceBean();
@@ -150,7 +146,6 @@ public class Server {
             initRegister();
         }
         for (Class<?> interfaceClass : classes) {
-//            CommonServerCache.PROVIDER_CLASS_MAP.put(interfaceClass.getName(), serviceBean);
             RegisterInfo registerInfo = RegisterInfo.builder()
                     .application(CommonServerCache.SERVER_CONFIG.getApplicationName())
                     .serviceName(interfaceClass.getName())
@@ -168,7 +163,8 @@ public class Server {
     private void initRegister() {
         if (CommonServerCache.REGISTER_SERVICE == null) {
             try {
-                CommonServerCache.REGISTER_SERVICE = new ZRigister("152.136.150.223:2181");
+                //TODO SPI机制
+                CommonServerCache.REGISTER_SERVICE = new ZookeeperRegister("152.136.150.223:2181");
             } catch (Exception e) {
                 throw new RuntimeException("registryServiceType unKnow,error is ", e);
             }

@@ -1,0 +1,2 @@
+jdk=rpc.core.proxy.jdk.JDKProxyFactory
+#javassist=rpc.core.proxy.JavassistProxyFactory

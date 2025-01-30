@@ -7,18 +7,12 @@ import rpc.core.common.RpcDecoder;
 import rpc.core.common.RpcEncoder;
 import rpc.core.common.RpcInvocation;
 import rpc.core.common.RpcProtocol;
-import rpc.core.common.cache.CommonServerCache;
 import rpc.core.common.config.PropertiesBootstrap;
-import rpc.core.common.event.RpcListenerLoader;
-import rpc.core.filter.ClientFilter;
-import rpc.core.filter.client.ClientFilterChain;
 import rpc.core.proxy.ProxyFactory;
-import rpc.core.register.AbstractRegister;
 import rpc.core.register.RegisterInfo;
-import rpc.core.register.RegisterService;
 import rpc.core.register.URL;
 import rpc.core.register.zookeeper.LoopWatcher;
-import rpc.core.register.zookeeper.ZRigister;
+import rpc.core.register.zookeeper.ZookeeperRegister;
 import rpc.core.router.Router;
 import rpc.core.serialize.SerializeFactory;
 import io.netty.bootstrap.Bootstrap;
@@ -35,7 +29,6 @@ import rpc.core.common.cache.CommonClientCache;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static rpc.core.common.constants.RpcConstants.DEFAULT_DECODE_CHAR;
@@ -43,9 +36,6 @@ import static rpc.core.spi.ExtensionLoader.EXTENSION_LOADER_CLASS_CACHE;
 
 public class Client {
     private static final Logger logger = LogManager.getLogger(Client.class);
-
-
-    private AbstractRegister abstractRegister;
 
     private final Bootstrap bootstrap = new Bootstrap();
 
@@ -120,23 +110,23 @@ public class Client {
         });
     }
 
-    public void doConnectServer() {
-        for (URL providerUrl : CommonClientCache.SUBSCRIBE_SERVICE_LIST) {
-            List<String> providerIps = abstractRegister.getProviderIps(providerUrl.getServiceName());
-            for (String providerIp : providerIps) {
-                try {
-                    ConnectionHandler.connect(providerUrl.getServiceName(), providerIp);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            URL url = new URL();
-            url.setServiceName(providerUrl.getServiceName());
-            url.addParameter("providerIps", JSON.toJSONString(providerIps));
-            //客户端在此新增一个订阅的功能
-            abstractRegister.doAfterSubscribe(url);
-        }
-    }
+//    public void doConnectServer() {
+//        for (URL providerUrl : CommonClientCache.SUBSCRIBE_SERVICE_LIST) {
+//            List<String> providerIps = abstractRegister.getProviderIps(providerUrl.getServiceName());
+//            for (String providerIp : providerIps) {
+//                try {
+//                    ConnectionHandler.connect(providerUrl.getServiceName(), providerIp);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            URL url = new URL();
+//            url.setServiceName(providerUrl.getServiceName());
+//            url.addParameter("providerIps", JSON.toJSONString(providerIps));
+//            //客户端在此新增一个订阅的功能
+//            abstractRegister.doAfterSubscribe(url);
+//        }
+//    }
 
     public void startClient() {
         Thread asyncSendJob = new Thread(new AsyncSendJob(), "ClientAsyncSendJobThread");
@@ -166,7 +156,7 @@ public class Client {
     private void initRegister() {
         if (CommonClientCache.REGISTER_SERVICE == null) {
             try {
-                CommonClientCache.REGISTER_SERVICE = new ZRigister(CommonClientCache.CLIENT_CONFIG.getRegisterAddr());
+                CommonClientCache.REGISTER_SERVICE = new ZookeeperRegister(CommonClientCache.CLIENT_CONFIG.getRegisterAddr());
             } catch (Exception e) {
                 throw new RuntimeException("registryServiceType unKnow,error is ", e);
             }

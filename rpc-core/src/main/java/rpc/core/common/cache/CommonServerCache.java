@@ -28,10 +28,6 @@ public class CommonServerCache {
      */
     public static final Set<URL> PROVIDER_URL_SET = new HashSet<>();
     /**
-     * 注册中心：用于服务端 服务的注册url和下线
-     */
-    public static RegistryService REGISTRY_SERVICE;
-    /**
      * 服务端序列化工厂
      */
     public static SerializeFactory SERVER_SERIALIZE_FACTORY;

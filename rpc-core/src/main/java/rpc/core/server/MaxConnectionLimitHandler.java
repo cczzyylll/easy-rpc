@@ -24,7 +24,6 @@ public class MaxConnectionLimitHandler extends ChannelInboundHandlerAdapter {
     private final int maxConnectionNum;
     private final AtomicInteger numConnection = new AtomicInteger(0);
     private final Set<Channel> childChannel = Collections.newSetFromMap(new ConcurrentHashMap<>());
-    //这是在jdk1.8之后出现的对于AtomicLong的优化版本
     private final LongAdder numDroppedConnections = new LongAdder();
     private final AtomicBoolean loggingScheduled = new AtomicBoolean(false);
 

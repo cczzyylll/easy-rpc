@@ -1,0 +1,4 @@
+fastJson=rpc.core.serialize.fastjson.FastJsonSerializeFactory
+hessian=rpc.core.serialize.hessian.HessianSerializeFactory
+jdk=rpc.core.serialize.jdk.JdkSerializeFactory
+kryo=rpc.core.serialize.kryo.KryoSerializeFactory

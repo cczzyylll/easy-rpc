@@ -19,7 +19,7 @@ public class ServiceDestroyListener implements RpcListener<RpcDestroyEvent> {
         while (urlIterator.hasNext()) {
             URL url = urlIterator.next();
             urlIterator.remove();
-            CommonServerCache.REGISTRY_SERVICE.unRegister(url);
+//            CommonServerCache.REGISTRY_SERVICE.unRegister(url);
         }
     }
 }
